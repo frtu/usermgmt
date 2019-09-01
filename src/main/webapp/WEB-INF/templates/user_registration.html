@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Spring MVC view layer: Thymeleaf vs. JSP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../styles/thvsjsp.css" th:href="@{/styles/thvsjsp.css}"/>
+  </head>
+  <body>
+    <h2>This is a Thymeleaf template</h2>
+    <form action="#" th:object="${user}" th:action="@{/users/registration}">
+      <fieldset>
+        <div>
+          <label for="username" th:text="#{user.username}">Username: </label>
+          <input id="username" type="text" th:field="*{username}" placeholder="super_learner"/>
+        </div>
+        <div>
+          <label for="email" th:text="#{user.email}">Email: </label>
+          <input id="email" type="email" th:field="*{email}" placeholder="email@domain.com"/>
+        </div>
+        <div>
+          <label for="password" th:text="#{user.password}">Password: </label>
+          <input id="password" type="password" th:field="*{password}"/>
+        </div>
+        <div>
+          <label th:text="#{user.paymentType}">Type: </label>
+          <ul>
+            <li th:each="type : ${allTypes}">
+              <input type="radio" th:field="*{paymentType}" th:value="${type}" />
+              <label th:for="${#ids.prev('paymentType')}"
+                     th:text="#{'paymentType.'+${type}}">First type</label>
+            </li>
+            <li th:remove="all"><input type="radio" /> <label>Second Type</label></li>
+          </ul>
+        </div>
+        <div class="submit">
+          <button type="submit" name="save">Register me!</button>
+        </div>
+      </fieldset>
+    </form>
+  </body>
+</html>

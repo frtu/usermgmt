@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   		http://www.springframework.org/schema/beans/spring-beans.xsd
+	   		http://www.springframework.org/schema/context
+	   		http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd
+			http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <!--============================================================-->
+    <!--============================================================-->
+    <!--THIS IS FILE CONTAINS THE SPRING BOOT IMPLICIT CONFIG -->
+    <!--THAT I MADE EXPLICIT FOR READABILITY -->
+    <!--============================================================-->
+    <!--============================================================-->
+
+    <!--Equivalent to @PropertySource({ "classpath*:application.properties"})-->
+    <context:property-placeholder location="classpath*:application*.properties"/>
+
+    <!-- **************************************************************** -->
+    <!--  SPRING ANNOTATION PROCESSING                                    -->
+    <!-- **************************************************************** -->
+    <!-- Activates various annotations to be detected in bean classes -->
+    <context:annotation-config/>
+
+    <!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
+    For example @Controller and @Service. Make sure to set the correct base-package-->
+    <!--Equivalent to @ComponentScan-->
+    <!--<context:component-scan base-package="org.frtu.usermgmt"/>-->
+
+    <!--Equivalent to @EnableJpaRepositories-->
+    <!--<jpa:repositories base-package="org.frtu.usermgmt.data.repository"/>-->
+
+    <!-- Configures the annotation-driven Spring MVC Controller programming model.
+        Note that, with Spring 3.0, this tag works in Servlet MVC only!  -->
+    <!--Equivalent to @EnableWebMvc OR extends WebMvcConfigurationSupport -->
+    <mvc:annotation-driven/>
+</beans>

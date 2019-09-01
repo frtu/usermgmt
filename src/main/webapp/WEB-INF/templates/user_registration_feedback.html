@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Spring MVC view layer: Thymeleaf vs. JSP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../styles/thvsjsp.css" th:href="@{/styles/thvsjsp.css}"/>
+  </head>
+  <body>
+    <h2>Feedback</h2>
+    An email has been sent to <span th:text="${user.email}">sample@domain.com</span>
+  </body>
+</html>

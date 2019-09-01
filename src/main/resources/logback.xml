@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="controller" additivity="false" level="TRACE">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <!-- ===================================== -->
+    <!--Runtime Controller returned mapping -->
+    <!-- ===================================== -->
+    <!-- PropertySource setting -->
+    <logger name="org.springframework.core.env.StandardEnvironment" additivity="false" level="INFO">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <logger name="org.springframework.web.context.support.StandardServletEnvironment" additivity="false" level="INFO">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <!-- Application context startup -->
+    <logger name="org.springframework.core.io.support.PathMatchingResourcePatternResolver" additivity="false"
+            level="INFO">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <logger name="org.springframework.web.context.ContextLoader" additivity="false" level="DEBUG">
+        <appender-ref ref="stdout"/>
+    </logger>
+
+    <!-- ===================================== -->
+    <!-- Web URL registrar -->
+    <!-- ===================================== -->
+    <!--URL registration -->
+    <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" additivity="false"
+            level="TRACE">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <!--Runtime Controller returned mapping -->
+    <logger name="org.springframework.web.method.HandlerMethod" additivity="false" level="TRACE">
+        <appender-ref ref="stdout"/>
+    </logger>
+
+    <logger name="org.frtu" additivity="false" level="TRACE">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <!--Persistence and Hibernate logs -->
+    <logger name="org.frtu.usermgmt.service" additivity="false" level="DEBUG">
+        <appender-ref ref="stdout"/>
+    </logger>
+    <root level="WARN">
+        <appender-ref ref="stdout"/>
+    </root>
+</configuration>

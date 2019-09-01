@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	   		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--Equivalent to @PropertySource({ "classpath*:application.properties"})-->
+    <context:property-placeholder location="classpath*:application.properties"/>
+
+    <!-- **************************************************************** -->
+    <!--  MESSAGE EXTERNALIZATION/INTERNATIONALIZATION                    -->
+    <!--  Standard Spring MessageSource implementation                    -->
+    <!-- **************************************************************** -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="spring-web/Messages"/>
+    </bean>
+
+    <!-- **************************************************************** -->
+    <!--  RESOURCE FOLDERS CONFIGURATION                                  -->
+    <!--  Dispatcher configuration for serving static resources           -->
+    <!-- **************************************************************** -->
+    <!-- Handles GET requests for /resources/** by efficiently serving static content in the ${webappRoot}/resources dir -->
+    <mvc:resources mapping="/styles/**" location="/styles/"/>
+    <mvc:resources mapping="/scripts/**" location="/scripts/"/>
+    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
+    <!-- Forwards requests to the "/" resource to the "welcome" view -->
+    <mvc:view-controller path="/" view-name="homepage"/>
+
+    <!--Look at http://docs.spring.io/spring-boot/docs/current/reference/html/howto-spring-mvc.html-->
+    <!--sect 65.8 Customize ViewResolvers-->
+    <!--Equivalent to @ThymeleafAutoConfiguration -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="viewResolvers">
+            <list>
+                <!-- Used here for 'xml' and 'atom' views  -->
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+                    <property name="order" value="1"/>
+                </bean>
+
+                <!--USE JSP FIRST-->
+                <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
+                <!--p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />-->
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+                    <property name="prefix" value="${spring.view.prefix}"/>
+                    <property name="suffix" value=".jsp"/>
+                    <property name="order" value="2"/>
+                    <property name="viewNames" value="*page"/>
+                </bean>
+
+                <!-- Used for Thymeleaf views AFTER -->
+                <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+                    <property name="templateEngine">
+                        <!--ref="templateEngine" />-->
+                        <bean id="templateEngine"
+                              class="org.thymeleaf.spring4.SpringTemplateEngine">
+                            <property name="templateResolver">
+                                <!--ref="templateResolver" />-->
+                                <bean id="templateResolver"
+                                      class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+                                    <property name="prefix" value="${spring.thymeleaf.prefix}"/>
+                                    <property name="suffix" value=".html"/>
+                                    <property name="templateMode" value="HTML5"/>
+                                    <!-- Template cache is set to false (default is true). -->
+                                    <property name="cacheable" value="${spring.thymeleaf.cache}"/>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="order" value="3"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

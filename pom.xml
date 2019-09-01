@@ -79,6 +79,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <!-- Database (H2) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.185</version>
+        </dependency>
         <!-- DataSource (HikariCP) -->
         <dependency>
             <groupId>com.zaxxer</groupId>

@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.*;
@@ -58,7 +59,7 @@ public class UserServiceImplTest {
 
     private void stubRepositoryToReturnExistingUser() {
         final User user = UserUtil.createUser();
-        when(userRepository.findOne(user.getId())).thenReturn(user);
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Arrays.asList(new User[]{user}));
     }
 
     @Test
